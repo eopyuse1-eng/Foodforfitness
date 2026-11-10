@@ -1,0 +1,79 @@
+FOOD FOR FITNESS - IMPLEMENTATION CHECKLIST
+
+UI DIRECTION
+[x] Use the shared fitness/nutrition screenshot as the visual reference for the
+    native Android app: fresh green/yellow gradient, clean white rounded cards,
+    nutrition summaries, and clear meal-list and food-detail screens.
+[x] Refresh the Food Diary browsing layout for responsive web and mobile,
+    preserving light/dark themes and existing food logging behavior.
+[x] Move theme controls into Settings, place the Settings link between Edit
+    Profile and Sign Out, and keep privacy/data controls in Settings.
+[x] Rehaul the other app screens and onboarding; the chatbot UI is already done
+    and is out of scope. Use a fitting responsive design for web and mobile web
+    rather than copying the native Android layout directly.
+
+PLATFORM UI
+[x] Web/PWA and mobile web: build one responsive UI that works well on desktop
+    and mobile browsers, with a visual direction suited to those platforms.
+[x] Deploy the Android-specific UI styles to the configured Firebase Hosting
+    site at https://food-for-fitness-2fe4d.web.app; web styling remains unchanged.
+[x] Android app: apply the reference design while keeping shared behavior and
+    adding Android-specific green/lime styling, touch-friendly bottom
+    navigation, and safe-area adaptations without changing the web theme.
+[x] Install the Android UI update as a local debug APK on the connected device.
+[ ] Android device verification: finish testing native Google sign-in and
+    interactions; Google sign-in still requires the debug SHA-1 in Firebase.
+[x] Disable Android cloud/device backup of app-local data so uninstall/reinstall
+    cannot restore a previous Firebase web-auth session to a fresh install.
+[ ] Sign the Android 1.3.1 (versionCode 14) release in Android Studio with the
+    existing app release keystore before uploading/distributing it. Update the
+    Google Drive APK and update manifest after the signed APK is ready.
+[x] Keep core features and visual direction consistent across platforms.
+
+HEALTH TRACKING
+[x] Allow individual health log entries to be deleted.
+[x] Keep deleted health logs hidden if stale cloud or offline-cache snapshots
+    are replayed, and retry cloud deletion during sync.
+[x] Save only vital readings entered in each health log; do not carry forward
+    unentered blood pressure or glucose values.
+[x] Show an adult BMI spectrum category and range, with a screening disclaimer.
+[x] Show condition-analysis guidance for every supported profile condition,
+    including gout, while avoiding invented medical targets.
+
+FOOD LOGS AND RECOMMENDATIONS
+[x] Keep Food Logs dietary-focused and classify every eligible food using a
+    Go, Grow, or Glow group plus a separate dish type.
+[x] Show only Go, Grow, and Glow food-group filters; remove All Foods,
+    Suggestions, and Other Foods.
+[x] Include dietary foods users can add to Food Logs in these dish types:
+    Salad, Appetizer, Main Dish, and Side Dish.
+[x] Keep camera-saved meals in their Go/Grow/Glow Food Log lists and label
+    each camera-saved entry as a Saved Meal.
+[x] Classify existing Food Logs from the reviewed catalog without deleting
+    records; hide non-dietary or unmatched entries from Food Logs and totals.
+[x] Keep the Go, Grow, Glow recommendations to one food for each group.
+
+AI CAMERA
+[x] Limit the AI camera to scanning raw ingredients/materials only.
+[x] After scanning, recommend one dietary food for each Go, Grow, and Glow group
+    that can be made from the scanned ingredients.
+[x] Show an estimated calorie count for each detected raw ingredient at its
+    estimated amount.
+[x] Accept every visible raw ingredient regardless of food group or a fixed
+    ingredient-count limit; only classify the resulting food recommendations
+    into Go, Grow, and Glow.
+[x] For every recommended food, show each component ingredient, its estimated
+    amount, and its individual calorie count.
+[x] Show the estimated total calories per serving for each recommendation and
+    make clear that component and total values are estimates.
+[x] Validate recommendations against the reviewed dietary catalog and require
+    the user to select a recommendation before adding it to Food Logs.
+[x] Resize/compress images and use a compact JSON request to reduce scan time.
+[x] Limit scan reasoning and retry once with a larger output budget if Gemini
+    truncates the ingredient and recommendation breakdown.
+
+CHATBOT
+[x] Add guardrails so the AI chatbot provides safe, appropriate nutrition guidance
+    and stays within its intended scope.
+[x] Route emergency, medication-change/dose, and dangerous weight-loss requests
+    to safe, professional-help guidance before calling an AI model.

@@ -1,0 +1,12 @@
+{
+  "appId": "com.foodforfitness.app",
+  "appName": "Food for Fitness",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "FirebaseAuthentication": {
+      "skipNativeAuth": true,
+      "providers": ["google.com"]
+    }
+  }
+}

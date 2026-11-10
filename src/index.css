@@ -1,0 +1,432 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background-color: #f7faef;
+}
+
+html.dark {
+  background-color: #020817;
+}
+
+body {
+  @apply bg-[#f7faef] text-slate-900 antialiased transition-colors duration-200;
+}
+
+html.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+html.native-android,
+html.native-android body,
+html.native-android #root {
+  min-height: 100dvh;
+  height: 100%;
+}
+
+html.native-android body {
+  overscroll-behavior-y: none;
+}
+
+html.native-android .app-shell-header {
+  padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+}
+
+.primary-action {
+  @apply bg-gradient-to-r from-emerald-600 to-green-500 text-white shadow-lg shadow-emerald-100 transition hover:-translate-y-0.5 hover:shadow-emerald-200 active:translate-y-0 active:scale-[0.99];
+}
+
+html.dark .primary-action {
+  @apply shadow-emerald-950/30;
+}
+
+.prompt-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.7) transparent;
+}
+
+.prompt-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.prompt-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prompt-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.7);
+  border-radius: 9999px;
+}
+
+.prompt-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.9);
+}
+
+.no-number-spinner::-webkit-inner-spin-button,
+.no-number-spinner::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.no-number-spinner {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+@keyframes scan {
+  0% { top: 5%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 95%; opacity: 0; }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.8);
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.8);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.95);
+}
+
+html.native-android {
+  --native-page: #f5f8ee;
+  --native-card: #ffffff;
+  --native-border: #e2ead8;
+  --native-ink: #193322;
+  --native-muted: #637568;
+  --native-green: #117a49;
+  --native-lime: #d7ed9f;
+  background-color: var(--native-page);
+}
+
+html.native-android.dark {
+  --native-page: #101914;
+  --native-card: #19241d;
+  --native-border: #334438;
+  --native-ink: #eff8ed;
+  --native-muted: #a3b4a4;
+  --native-green: #7ce0a7;
+  --native-lime: #35432b;
+}
+
+html.native-android body {
+  background: var(--native-page);
+  color: var(--native-ink);
+}
+
+html.native-android .app-shell {
+  background:
+    radial-gradient(ellipse at 92% 10%, rgba(216, 237, 159, 0.22), transparent 28rem),
+    var(--native-page);
+}
+
+html.native-android.dark .app-shell {
+  background:
+    radial-gradient(ellipse at 92% 10%, rgba(73, 113, 59, 0.16), transparent 28rem),
+    var(--native-page);
+}
+
+html.native-android .native-android-header {
+  padding: calc(0.65rem + env(safe-area-inset-top, 0px)) 1rem 0.65rem;
+  border: 0;
+  background: linear-gradient(112deg, #0b7544 0%, #14834d 62%, #278d4e 100%);
+  box-shadow: 0 5px 18px rgba(21, 76, 43, 0.16);
+  color: #fff;
+}
+
+html.native-android .native-android-header h1 {
+  color: #fff;
+  font-size: 1.05rem;
+  letter-spacing: -0.035em;
+}
+
+html.native-android .native-android-header h1 span {
+  color: #e2f09f;
+}
+
+html.native-android .native-android-header button[aria-label="Open profile"] {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  background: #e2edaa;
+  color: #145633;
+  font-size: 0.9rem;
+}
+
+html.native-android .native-android-nav {
+  right: 0.75rem;
+  bottom: calc(0.55rem + env(safe-area-inset-bottom, 0px));
+  left: 0.75rem;
+  width: auto;
+  height: calc(4.35rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.3rem 0.35rem calc(0.25rem + env(safe-area-inset-bottom, 0px));
+  border: 1px solid var(--native-border);
+  border-radius: 1.55rem;
+  background: color-mix(in srgb, var(--native-card) 94%, transparent);
+  box-shadow: 0 10px 32px rgba(17, 47, 28, 0.16);
+}
+
+html.native-android .native-android-nav > div {
+  height: 100%;
+}
+
+html.native-android .native-android-nav .native-nav-button {
+  min-height: 3.5rem;
+  gap: 0.12rem;
+  border-radius: 1.15rem;
+}
+
+html.native-android .native-android-nav .native-nav-button > div {
+  padding: 0.22rem 0.85rem;
+  background: transparent;
+}
+
+html.native-android .native-android-nav .native-nav-button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+html.native-android .native-nav-label-web {
+  display: none;
+}
+
+html.native-android .native-nav-label-native {
+  display: block;
+  text-transform: none;
+}
+
+html.native-android .native-android-nav button[aria-current="page"] {
+  background: #eff6db;
+  color: #17613c;
+}
+
+html.native-android.dark .native-android-nav button[aria-current="page"] {
+  background: #293b2c;
+  color: #a9edbd;
+}
+
+html.native-android .native-android-nav button[aria-label="Scan ingredients"] {
+  top: -0.55rem;
+  width: 3.35rem;
+  height: 3.35rem;
+  border: 3px solid var(--native-card);
+  background: linear-gradient(145deg, #f3d567, #e9bd42);
+  color: #22512e;
+  box-shadow: 0 6px 16px rgba(155, 119, 17, 0.28);
+}
+
+html.native-android .native-android-nav button[aria-label="Scan ingredients"] svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+html.native-android .app-shell > main {
+  padding-bottom: calc(6.6rem + env(safe-area-inset-bottom, 0px)) !important;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+}
+
+html.native-android .native-screen:not(.native-screen--chat) {
+  max-width: 48rem;
+  padding: 1rem 1rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
+  row-gap: 1rem;
+}
+
+html.native-android .native-screen--chat {
+  background: var(--native-page);
+}
+
+html.native-android .native-screen > header,
+html.native-android .native-auth-brand {
+  border-color: transparent;
+  background: linear-gradient(125deg, #f6e18e 0%, #d7ed9f 42%, #80d5a4 100%);
+  color: #183c27;
+  box-shadow: 0 10px 24px rgba(68, 109, 57, 0.12);
+}
+
+html.native-android .native-dashboard-greeting,
+html.native-android .native-food-log-intro {
+  padding: 1.15rem;
+  border: 1px solid #dfe9d2;
+  border-radius: 1.5rem;
+  background: linear-gradient(125deg, #f8e7a5 0%, #e1efb7 48%, #c3e9c7 100%);
+  box-shadow: 0 8px 20px rgba(66, 104, 51, 0.09);
+}
+
+html.native-android .native-dashboard-greeting :is(h1, p),
+html.native-android .native-food-log-intro :is(h1, p) {
+  color: #1b422b;
+}
+
+html.native-android.dark .native-dashboard-greeting,
+html.native-android.dark .native-food-log-intro {
+  border-color: #3a523b;
+  background: linear-gradient(125deg, #35432b 0%, #28563b 52%, #176746 100%);
+}
+
+html.native-android.dark .native-dashboard-greeting :is(h1, p),
+html.native-android.dark .native-food-log-intro :is(h1, p) {
+  color: #f4f8e9;
+}
+
+html.native-android .native-screen > header :is(h1, h2, h3, p) {
+  color: #183c27;
+}
+
+html.native-android.dark .native-screen > header,
+html.native-android.dark .native-auth-brand {
+  border-color: #3a523b;
+  background: linear-gradient(125deg, #35432b 0%, #28563b 52%, #176746 100%);
+  color: #f4f8e9;
+}
+
+html.native-android.dark .native-screen > header :is(h1, h2, h3, p) {
+  color: #f4f8e9;
+}
+
+html.native-android .native-chat-header {
+  border-color: var(--native-border);
+  background: var(--native-card);
+  box-shadow: 0 3px 14px rgba(34, 64, 38, 0.06);
+}
+
+html.native-android .native-screen :is(section, [data-tour-target]) {
+  border-color: var(--native-border);
+  border-radius: 1.4rem;
+  box-shadow: 0 5px 18px rgba(34, 64, 38, 0.055);
+}
+
+html.native-android .native-screen section {
+  background-color: var(--native-card);
+}
+
+html.native-android.dark .native-screen section,
+html.native-android.dark .native-screen [data-tour-target] {
+  border-color: var(--native-border);
+}
+
+html.native-android .native-screen :is(input, select, textarea) {
+  min-height: 2.9rem;
+  border-radius: 0.95rem;
+  font-size: 16px;
+}
+
+html.native-android .native-screen button,
+html.native-android .native-auth-screen button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html.native-android .native-screen .primary-action,
+html.native-android .native-auth-card .primary-action {
+  background-image: linear-gradient(110deg, #11814d 0%, #26a45b 70%, #63bd57 100%);
+  box-shadow: 0 7px 18px rgba(16, 120, 69, 0.22);
+}
+
+html.native-android .native-screen .primary-action:active,
+html.native-android .native-auth-card .primary-action:active {
+  transform: scale(0.985);
+}
+
+html.native-android .native-auth-screen {
+  min-height: 100dvh;
+  align-items: center;
+  padding: calc(1rem + env(safe-area-inset-top, 0px)) 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(ellipse at 5% 2%, rgba(245, 216, 112, 0.48), transparent 16rem),
+    linear-gradient(155deg, #f5f8ec 0%, #edf5e6 52%, #e1f1e4 100%);
+}
+
+html.native-android.dark .native-auth-screen {
+  background:
+    radial-gradient(ellipse at 5% 2%, rgba(95, 92, 40, 0.25), transparent 16rem),
+    linear-gradient(155deg, #0d1511 0%, #101a14 55%, #11251b 100%);
+}
+
+html.native-android .native-auth-card {
+  overflow: hidden;
+  border-color: var(--native-border);
+  border-radius: 1.7rem;
+  background: var(--native-card);
+  padding: 1.25rem;
+  box-shadow: 0 18px 44px rgba(32, 75, 43, 0.13);
+}
+
+html.native-android .native-auth-brand {
+  margin: -1.25rem -1.25rem 1.25rem;
+  padding: 1.1rem 1.25rem 1.35rem;
+  border-radius: 0 0 1.35rem 1.35rem;
+}
+
+html.native-android .native-auth-brand h1 {
+  color: #183c27;
+  font-size: 1.45rem;
+}
+
+html.native-android .native-auth-brand p {
+  color: rgba(24, 60, 39, 0.76);
+}
+
+html.native-android .native-auth-brand button {
+  min-height: 2.5rem;
+}
+
+html.native-android.dark .native-auth-card {
+  border-color: var(--native-border);
+  background: var(--native-card);
+}
+
+html.native-android.dark .native-auth-brand h1,
+html.native-android.dark .native-auth-brand p {
+  color: #f4f8e9;
+}
+
+html.native-android .native-auth-card h2 {
+  color: var(--native-ink);
+}
+
+html.native-android .native-auth-card label {
+  color: var(--native-muted);
+}
+
+html.native-android .native-auth-card input {
+  min-height: 3.1rem;
+  border-radius: 1rem;
+  background: #f6f8f2;
+  font-size: 16px;
+}
+
+html.native-android.dark .native-auth-card input {
+  border-color: var(--native-border);
+  background: #121b15;
+  color: var(--native-ink);
+}
+
+@media (min-width: 640px) {
+  html.native-android .native-auth-card {
+    padding: 1.75rem;
+  }
+
+  html.native-android .native-auth-brand {
+    margin: -1.75rem -1.75rem 1.5rem;
+    padding: 1.25rem 1.75rem 1.5rem;
+  }
+}

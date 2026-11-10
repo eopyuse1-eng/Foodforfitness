@@ -1,0 +1,20 @@
+{
+  "name": "Food for Fitness",
+  "short_name": "FoodFit",
+  "description": "Personal nutrition and health tracking for Filipino families.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "lang": "en-PH",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

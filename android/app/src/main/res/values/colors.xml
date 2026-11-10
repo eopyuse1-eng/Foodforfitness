@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="foodfit_status_bar">#064E3B</color>
+    <color name="foodfit_navigation_bar">#020817</color>
+</resources>

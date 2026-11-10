@@ -1,0 +1,419 @@
+FOODFORFITNESS
+SYSTEM OVERVIEW, FEATURES, AND CURRENT SYSTEM ANALYSIS
+
+Prepared from the application source code and project documentation
+Review date: October 15, 2026
+
+======================================================================
+1. EXECUTIVE SUMMARY
+======================================================================
+
+FoodForFitness is a Filipino-focused nutrition and wellness tracking
+application. It brings together food logging, estimated nutrition
+tracking, profile-based daily targets, health readings, reminders, and
+AI-assisted food and nutrition guidance in one mobile-friendly system.
+
+The application is designed for people who want a convenient way to
+understand their food intake and wellness habits, especially in relation
+to Filipino dishes and common health goals or conditions. It is a
+tracking and educational support tool. It is not a medical device, a
+diagnostic system, or a replacement for advice from a doctor or
+registered dietitian.
+
+The user interface is built with React and Tailwind CSS. The project
+supports a browser/PWA experience and an Android app shell through
+Capacitor. Firebase Authentication and Cloud Firestore integrations are
+present in the source code, but whether a live Firebase project is
+configured depends on the runtime environment and credentials.
+
+======================================================================
+2. SYSTEM PURPOSE AND PROBLEM IT ADDRESSES
+======================================================================
+
+FoodForFitness aims to help users:
+
+- Record meals and serving sizes.
+- See estimated calories, macronutrients, and selected micronutrients.
+- Compare food intake with daily targets.
+- Browse Filipino foods and receive profile-aware food suggestions.
+- Record selected body and health readings.
+- Set meal, hydration, medication, or health-check reminders.
+- Ask NutriBot general nutrition questions by typing or, when supported,
+  using speech.
+- Estimate the nutrition content of a meal photo with AI.
+
+The main idea is to make nutrition tracking more approachable and
+culturally relevant by centering Filipino meals, using a simple
+dashboard, and offering multiple ways to record food.
+
+======================================================================
+3. OVERALL THEME AND USER EXPERIENCE
+======================================================================
+
+The system uses a friendly, supportive, health-oriented visual theme:
+
+- Teal and emerald colors communicate wellness, nutrition, and progress.
+- Filipino identity is reflected in the FoodForFitness name, the
+  "Mabuhay" greeting, and the Filipino food catalog.
+- The navigation is designed for small screens, with a bottom bar for
+  Dashboard, Food Log, Scanner, Health, and AI Bot.
+- Cards, progress bars, status colors, and charts present information
+  quickly instead of requiring users to read dense reports.
+- A light/dark theme can be selected. The preference is stored in the
+  browser's local storage.
+- The design aims to feel like a practical daily companion, not a
+  hospital record system.
+
+The tone of the AI assistant is intended to be encouraging and concise,
+with Taglish or English responses. Because the app stores health-related
+profile details and gives nutrition estimates, the interface and
+documentation should continue to make clear that outputs are
+informational and may be inaccurate.
+
+======================================================================
+4. FUNCTIONS CURRENTLY PRESENT IN THE APP
+======================================================================
+
+4.1 Account access and profile
+
+- Email/password registration and sign-in are implemented through
+  Firebase Authentication when Firebase is configured.
+- Google sign-in is also implemented.
+- A Demo Sign In option is shown when Firebase is not configured.
+- New account registration asks for a name, gender option, email,
+  password, and acceptance of the Terms and Conditions plus
+  acknowledgement of the Privacy Policy.
+- New account profiles record the terms and privacy versions and
+  acceptance/acknowledgement timestamps.
+- Profile setup collects name, gender, age, weight, height, activity
+  level, weight goal, and selected health conditions.
+- The profile view allows users to edit setup information, sign out,
+  inspect/download app data as JSON, and clear app local-storage data
+  from the current device.
+- Signed-in users can request deletion of the Firebase Auth account and
+  the app's known Firestore profile and food-log records. The flow
+  requires re-authentication and confirmation.
+- A Privacy Policy dialog describes app storage, AI processing,
+  provider limitations, and available data controls.
+- The available setup condition choices currently include diabetes,
+  hypertension, gout, chronic kidney disease (CKD), PCOS, and
+  dyslipidemia.
+
+4.2 Dashboard and nutrition progress
+
+- Displays calorie intake, calorie target, and protein, carbohydrate,
+  and fat totals with progress indicators.
+- Displays sugar and sodium limits and warnings when totals exceed the
+  configured targets.
+- Displays catalog-provided micronutrient totals, including fiber, calcium,
+  iron, potassium, and selected vitamins; unavailable values are not guessed.
+- Uses profile information to calculate approximate calorie needs and
+  condition-related nutrition limits.
+
+4.3 Filipino food log
+
+- Includes a bundled Filipino food catalog that loads when the Food Log
+  page is opened.
+- Supports searching by food name or category.
+- Supports browsing by Go, Grow, Glow, and Other food groups.
+- Provides profile-aware suggestions using simple scoring rules. For
+  example, some foods are scored based on reported diabetes,
+  hypertension, or gout flags.
+- Lets users set a serving quantity and add food to their log.
+- Scales catalog nutrient values by serving quantity and marks unavailable
+  values as unknown rather than substituting category-based estimates.
+- Lets users remove food-log entries.
+- Provides period-based calorie and nutrient summaries for analytics.
+
+4.4 Camera and photo food analysis
+
+- Supports taking a photo with the device camera or selecting an image
+  from the photo library.
+- Resizes/compresses the image before sending it for analysis.
+- Uses the Gemini multimodal API to identify up to three foods and
+  estimate their nutrition, portion multiplier, allergens, purine
+  level, confidence, and brief health/portion notes.
+- Displays the result for review and can add recognized items to the
+  food log.
+- Presents warning indicators for selected high-sugar, high-sodium, or
+  high-purine results based on profile settings.
+- The scanner is focused on meal/plate photo analysis through camera
+  capture or image upload. Barcode scanning and dedicated nutrition
+  facts label reading are not included.
+
+4.5 Vitals and nutrition analytics
+
+- Allows users to enter weight, blood pressure, and glucose readings.
+- Displays BMI, recent readings, condition-related nutrition insights,
+  and food-log trends for 7-day or 30-day periods.
+- Provides averages, goal-day counts, nutrient totals, and a calorie
+  trend visualization based on logged food dates.
+- The current vital readings are held in application state and are not
+  durably saved to Firestore or local storage.
+- Initial health readings are sample data in the source code and should
+  not be mistaken for real user readings.
+
+4.6 Reminders and notifications
+
+- Supports adding, editing, and removing reminders.
+- Reminder types include meal, hydration, medication, and health check.
+- Supports daily, weekday, and one-time repeat settings.
+- Stores reminders in local storage and, for configured signed-in users,
+  in the Firestore profile document.
+- Uses Capacitor Local Notifications for Android.
+- Uses browser notifications for web/PWA where supported.
+- Reminder scheduling depends on device/browser permissions. Web
+  reminders require the app's JavaScript to be running for the
+  in-app checking behavior; there is no server-side push scheduler.
+
+4.7 NutriBot and accessibility-oriented controls
+
+- Provides an AI nutrition chat using the user's profile context,
+  selected conditions, BMI, goals, and configured nutrition targets.
+- The current deployed chatbot uses Gemini. A local integration point
+  is being prepared for a custom fine-tuned nutrition model to answer
+  first, with Gemini as fallback; the trained model is not yet connected
+  to the deployed app.
+- Stores conversation history in local storage, keyed by profile name.
+- Provides speech-to-text where the runtime exposes the browser speech
+  recognition API.
+- Provides text-to-speech using a native Capacitor plugin on Android
+  and browser speech synthesis on web where available.
+- Speech recognition support varies by browser and device.
+
+4.8 PWA and Android delivery
+
+- The web project includes a PWA manifest and a service worker for
+  app-shell and runtime caching.
+- The manifest configures standalone display and a portrait-oriented
+  experience.
+- Capacitor wraps the built web app for Android and routes selected
+  platform capabilities such as camera, speech, and notifications.
+- The install/download prompt is intended for the web experience and
+  is hidden in the native Capacitor app.
+
+======================================================================
+5. HIGH-LEVEL SYSTEM FLOW
+======================================================================
+
+1. The app starts and checks for an existing Firebase Auth session.
+2. If the user is not authenticated or the profile is not set up, the
+   app shows the account/profile screen.
+3. A Firebase user can register or sign in if Firebase configuration
+   is available. Demo Sign In is available when Firebase is absent.
+4. The user enters profile details and preferences.
+5. The shared application hook manages profile, food-log, reminder,
+   vital, and navigation state.
+6. Food entries are selected from the catalog or created from a photo
+   analysis.
+7. The app calculates totals and compares them with profile-based
+   targets.
+8. The dashboard, health analytics, and NutriBot use this state to
+   present progress or guidance.
+9. Depending on platform, data is held in memory/local storage,
+   Firebase Authentication/Firestore, or sent to an external AI
+   provider for processing.
+
+======================================================================
+6. IMPLEMENTATION AND DATA STORAGE
+======================================================================
+
+Frontend:
+- React 19 and JavaScript/JSX
+- Vite build and development tooling
+- Tailwind CSS styling
+
+Platform:
+- Capacitor 8 Android shell
+- Web/PWA manifest and service worker
+- Platform adapters choose web or native implementations for selected
+  features
+
+Cloud services:
+- Firebase Authentication for account identity
+- Cloud Firestore for profile, reminders, and signed-in food logs
+- Gemini for food image analysis and chat fallback
+- Custom fine-tuned model for primary chat responses (prototype in progress)
+
+Current storage behavior:
+
+- Profile and reminders are saved to a Firestore profile document when
+  Firebase is configured and the user is signed in.
+- Signed-in food logs are stored under the user's Firestore foodLogs
+  subcollection.
+- Guest/demo food logs are held in React memory and are not durable
+  after a page reload or app reset.
+- Vital readings are currently held in React memory only.
+- NutriBot history, theme preference, reminder cache, and a food catalog
+  cache use local storage.
+- The food catalog itself is bundled application data, not a Firestore
+  collection.
+- No Firebase Storage use was found in the implementation.
+
+======================================================================
+7. SYSTEM ANALYSIS: STRENGTHS
+======================================================================
+
+- A coherent set of nutrition, health, reminder, and AI features is
+  available in one mobile-oriented interface.
+- Filipino food is central to both food discovery and the scanner/chat
+  prompts, which differentiates the system from generic calorie logs.
+- The profile informs nutrition targets and some food suggestions,
+  rather than presenting exactly the same experience to every user.
+- Camera and photo upload give users alternative ways to record meals.
+- The application separates major responsibilities into feature
+  components, a shared state hook, service modules, and platform
+  adapters.
+- The app has both web and native delivery paths, with platform-aware
+  notification and speech/text-to-speech support.
+- User-entered food logs can be persisted to Firestore for configured
+  Firebase accounts.
+- The current app includes a medical-information disclaimer in the
+  Terms and Conditions and Privacy Policy content.
+
+======================================================================
+8. KNOWN LIMITATIONS AND AREAS TO IMPROVE
+======================================================================
+
+8.1 Nutrition accuracy and clinical safety
+
+- Food catalog values and
+  AI-derived meal values are estimates. Actual recipes, ingredients,
+  and serving sizes vary.
+- AI confidence and nutrient results should not be treated as verified
+  laboratory or medical data.
+- Target rules are simplified application calculations, not a
+  clinically validated personalized nutrition prescription.
+- The application should avoid presenting condition-based suggestions
+  as diagnosis or treatment.
+- Allergen and dietary suitability estimates need user verification.
+
+8.2 Dashboard date scope
+
+- Food-log totals are currently calculated from the full loaded log.
+- The Dashboard labels these as today's nutrition, but signed-in logs
+  can include older entries. This can make the dashboard's "today"
+  totals include more than today's food.
+- The analytics page groups entries by date, but the main dashboard
+  should also filter by the current local date.
+
+8.3 Data persistence and demo mode
+
+- Demo Sign In is a temporary exploration path, not a durable account.
+- Guest/demo food logs and vitals are not durably saved.
+- Sample vital readings are preloaded in source code and should be
+  removed or clearly labeled before production use.
+- Clearing app/browser data removes local-only information and can
+  reset the app to its initial state.
+- There is no automatic migration of guest food logs into a Firebase
+  account.
+
+8.4 Authentication and terms consent
+
+- Firebase integrations require the correct runtime configuration and
+  enabled Firebase providers.
+- The Google sign-in popup runs before consent is checked for a new app
+  profile. The app profile is not written until consent is recorded,
+  but Firebase Authentication may create the identity first.
+- Terms/privacy version and timestamp fields are recorded for new
+  profiles. Existing accounts are not automatically asked to consent
+  again when documents change.
+- The policy text is an implementation-level notice, not legal advice.
+  The project owner still needs to confirm the official privacy contact,
+  review the legal language, and ensure the described process and
+  retention practices match the deployed system.
+
+8.5 AI and privacy
+
+- Chat context, including selected profile and health information, is
+  sent to an AI provider for answers. Food images are sent to Gemini for
+  analysis.
+- When the custom trained-model endpoint is configured, chat messages
+  are sent there first; requests that need fallback or cannot reach the
+  endpoint are sent to Gemini. This model integration is a prototype
+  and is not yet connected to the deployed app.
+- Users should be clearly informed of this processing and should avoid
+  entering sensitive details that are not needed.
+- Any API key bundled into a browser/mobile frontend can be extracted
+  by a user. Production AI calls should be reviewed for a secure
+  backend/proxy design, rate limiting, and provider-key protection.
+- Users can view/download the data currently available in the app and
+  clear local-storage data on the current device.
+- Account deletion attempts to remove the user's Firestore profile and
+  food-log documents and Firebase Authentication account. It cannot
+  remove AI-provider copies, data on other devices, or external
+  platform backups/logs. Firebase security rules and deletion behavior
+  must be tested in the deployed project.
+- The project still needs a verified privacy contact channel and an
+  owner-approved retention and legal review before public release.
+
+8.6 Feature completeness and testing
+
+- Barcode scanning and dedicated nutrition facts label reading are not
+  included; the scanner currently handles meal photo capture/upload.
+- Browser speech recognition and notifications vary by browser,
+  operating system, permission, and network availability.
+- Reminder delivery on web is not guaranteed when the app is closed;
+  the app does not use a server-side push service.
+- Firestore security rules, deployed database configuration, and
+  production hosting cannot be verified from the application source
+  alone.
+- The application should be tested on target Android devices and
+  browsers, including permission denial, offline behavior, data reset,
+  and account transitions.
+
+======================================================================
+9. RECOMMENDED PRIORITIES
+======================================================================
+
+Before presenting a production-ready system:
+
+1. Correct dashboard food totals to show only the selected/current day.
+2. Decide which data must persist: especially vitals and guest/demo
+   food logs, or label their current temporary behavior clearly.
+3. Remove sample vital values from real-user views or mark them
+   explicitly as sample data.
+4. Have the project owner/adviser review the Privacy Policy and Terms,
+   add a verified privacy contact channel, and define retention and
+   material-change notice procedures.
+5. Review AI data handling and move provider secrets behind a secure
+   server-side endpoint before public release.
+6. Add backend validation and confirm Firestore security rules prevent
+   users from reading or modifying another user's data.
+7. Keep the scanner focused on camera capture and photo upload; barcode
+   and nutrition-label scanning are intentionally out of current scope.
+8. Add tests for calculations, date filtering, persistence, consent,
+   notifications, and account flows.
+9. Obtain adviser/qualified professional review of nutrition limits,
+   health claims, legal language, and privacy practices.
+
+======================================================================
+10. OVERALL CONCLUSION
+======================================================================
+
+FoodForFitness is a mobile-first Filipino nutrition and wellness
+tracking system with a strong feature concept: combine familiar local
+foods, personal progress tracking, reminders, camera-based meal
+estimation, and an AI nutrition assistant.
+
+The current implementation is a functional prototype with meaningful
+web and Android foundations. Its strongest value is the integration of
+these user-facing tools in a culturally relevant interface. Its main
+risks are the approximate nature of nutrition/AI output, uneven data
+persistence, an identified mismatch between dashboard labels and
+food-log date aggregation, and privacy/production safeguards that still
+need deployment-specific verification and owner review.
+
+For a capstone presentation, distinguish clearly between:
+- Implemented and testable features;
+- Features that require Firebase/API configuration or device
+  permissions;
+- Demo-only or estimate-based behavior; and
+- Recommended future work.
+
+The system should be described as an educational wellness and tracking
+application, not as a medical diagnosis or treatment product.
+
+======================================================================
+END OF REPORT
+======================================================================
